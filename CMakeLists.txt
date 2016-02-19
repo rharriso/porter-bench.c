@@ -1,10 +1,8 @@
 cmake_minimum_required(VERSION 3.3)
 project(porter_bench)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -c -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-include_directories(runtime porter)
-set(SOURCE_FILES porter_bench.cpp porter/stem.c)
-set(HEADER_FILES runtime/header.h runtime/api.h)
-
-add_executable(porter_bench ${SOURCE_FILES} ${HEADER_FILES})
+set(SOURCE_FILES porter_snowball_bench.cpp porter/stem.c runtime/header.h runtime/api.h runtime/api.c runtime/utilities.c porter_bench.c)
+add_executable(porter_snowball_bench ${SOURCE_FILES})
+add_executable(porter_bench porter_bench.c)
