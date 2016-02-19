@@ -374,10 +374,23 @@ static void stemfile(FILE * f)
             s[stem(s,0,i-1)+1] = 0;
             /* the previous line calls the stemmer and uses its result to
                zero-terminate the string in s */
-            printf("%s",s);
+            //printf("%s",s);
         }
-        else putchar(ch);
+        else{
+          //putchar(ch);
+        }
     }
+}
+
+#include <sys/time.h>
+#include <sys/resource.h>
+
+double get_time()
+{
+    struct timeval t;
+    struct timezone tzp;
+    gettimeofday(&t, &tzp);
+    return t.tv_sec + t.tv_usec*1e-6;
 }
 
 int main(int argc, char * argv[])
@@ -386,7 +399,15 @@ int main(int argc, char * argv[])
 
     FILE * f = fopen("./test/de-bello-gallico.txt","r");
     if (f == 0) { fprintf(stderr,"File %s not found\n",argv[i]); exit(1); }
-    stemfile(f);
+
+    double start = get_time();
+    for(int i = 0; i < 20; i++) {
+        rewind(f);
+      printf("Loop\n");
+      stemfile(f);
+    }
+    double end = get_time();
+    printf("\n%lf %lf\n", end - start, (end - start) / 20);
 
     free(s);
     return 0;
